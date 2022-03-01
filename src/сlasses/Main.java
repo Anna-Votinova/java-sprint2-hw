@@ -1,11 +1,13 @@
 package сlasses;
 
-import мanager.TaskManager;
+import manager.Managers;
+import manager.TaskManager;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getDefault();
 
         Task task1 = new Task("Задача 1", "Сделать уборку");
         Task task2 = new Task("Задача 2", "Помыть посуду");
@@ -54,5 +56,21 @@ public class Main {
         System.out.println(manager.getTaskById(task1.getId()) + "\n");
         manager.removeEpicById(epic1.getId());
         System.out.println(manager.getEpicById(epic1.getId()) + "\n");
+
+        manager.getTaskById(2L);
+        List<Task> list1 = manager.history();
+        for(Task task : list1) {
+            System.out.println(task);
+        }
+        manager.getEpicById(4L);
+        List<Task> list2 = manager.history();
+        for(Task task : list2) {
+            System.out.println(task);
+        }
+        manager.getSubtaskById(7L);
+        List<Task> list3 = manager.history();
+            for(Task task : list3) {
+            System.out.println(task);
+        }
     }
 }
