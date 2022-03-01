@@ -1,4 +1,4 @@
-package сlasses;
+package tasks;
 
 import java.util.Objects;
 
