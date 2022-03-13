@@ -19,9 +19,10 @@ public class Main {
         Epic epic1 = new Epic ("Большая задача 1", "Отдохнуть на море");
         Subtask subtask1 = new Subtask("Подзадача 1", "Забронировать гостиницу");
         Subtask subtask2 = new Subtask("Подзадача 2", "Купить билеты на самолет");
+        Subtask subtask3 = new Subtask("Подзадача 3", "Собрать вещи");
 
         Epic epic2 = new Epic ("Большая задача 2", "Сделать ремонт");
-        Subtask subtask3 = new Subtask("Подзадача 3", "Поклеить новые обои");
+
 
         task1 = manager.createNewTask(task1);
         task2 = manager.createNewTask(task2);
@@ -33,12 +34,13 @@ public class Main {
 
         epic1.addSubtask(subtask1);
         epic1.addSubtask(subtask2);
-        epic2.addSubtask(subtask3);
+        epic1.addSubtask(subtask3);
 
         System.out.println(manager.getListOfAllTasks() + "\n");
         System.out.println(manager.getListOfAllEpics() + "\n");
         System.out.println(manager.getListOfAllSubtasks() + "\n");
 
+        /*
         task1.updateStatus();
         System.out.println(manager.getTaskById(task1.getId()) + "\n");
         task2.updateStatus();
@@ -75,6 +77,40 @@ public class Main {
         List<Task> list3 = manager.history();
             for(Task task : list3) {
             System.out.println(task);
+        }*/
+
+        manager.getTaskById(1L);
+        manager.getTaskById(2L);
+        manager.getEpicById(3L);
+        manager.getSubtaskById(7L);
+
+        List<Task> story = manager.history();
+        for(Task task : story) {
+            System.out.println(task.getId());
+        }
+
+        manager.getTaskById(2L);
+        manager.getEpicById(4L);
+        manager.getSubtaskById(5L);
+        manager.getSubtaskById(6L);
+
+        story = manager.history();
+        for(Task task : story) {
+            System.out.println(task.getId());
+        }
+
+        manager.removeTaskById(1L);
+
+        story = manager.history();
+        for(Task task : story) {
+            System.out.println(task.getId());
+        }
+
+        manager.removeEpicById(3L);
+
+        story = manager.history();
+        for(Task task : story) {
+            System.out.println(task.getId());
         }
     }
 }
