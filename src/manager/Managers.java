@@ -6,6 +6,11 @@ public class Managers {
         return new InMemoryTaskManager();
     }
 
+    public static TaskManager getDefaultFileManager(java.io.File file) {
+        FileBackedTasksManager manager = FileBackedTasksManager.loadFromFile(file);
+        return manager;
+    }
+
     public static HistoryManager getDefaultHistory(){
         return new InMemoryHistoryManager();
     }

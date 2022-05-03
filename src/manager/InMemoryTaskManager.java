@@ -21,13 +21,22 @@ public class InMemoryTaskManager implements TaskManager {
 
     }
 
+    protected void setIdCounter(Long idCounter) {
+        this.idCounter = idCounter;
+    }
+
     private void generateId(Task task) {
         if (task.getId() == null) {
             task.setId(idCounter++);
-        } else {
+        }/* else {
             System.out.println("Ошибка! Передана задача с непустым id");
-        }
+        }*/
     }
+
+    protected HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
     @Override
     public Task createNewTask(Task task) {
         generateId(task);
@@ -63,35 +72,55 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(Long id) {
         Task task = tasks.get(id);
-        historyManager.add(task);
+        addNewViewToHistory(task);
         return task;
     }
 
     @Override
     public Subtask getSubtaskById(Long id) {
         Subtask subtask = subtasks.get(id);
-        historyManager.add(subtask);
+        addNewViewToHistory(subtask);
         return subtask;
     }
 
     @Override
     public Epic getEpicById(Long id) {
         Epic epic = epics.get(id);
-        historyManager.add(epic);
+        addNewViewToHistory(epic);
         return epic;
+    }
+
+    public Task getAnyTaskById (Long id) {
+        if (tasks.containsKey(id)) {
+            return tasks.get(id);
+        } else if (epics.containsKey(id)) {
+            return epics.get(id);
+        } else {
+            return subtasks.get(id);
+        }
+    }
+
+    protected void addNewViewToHistory(Task task) {
+        historyManager.add(task);
     }
 
     @Override
     public void clearAllTasks () {
-        tasks.clear();
+        for(Task task : tasks.values()) {
+            removeTaskById(task.getId());
+        }
     }
     @Override
     public void clearAllSubtasks () {
-        subtasks.clear();
+        for(Subtask subtask : subtasks.values()) {
+            removeSubtaskById(subtask.getId());
+        }
     }
     @Override
     public void clearAllEpics () {
-        epics.clear();
+        for(Epic epic : epics.values()) {
+            removeEpicById(epic.getId());
+        }
     }
     @Override
     public void removeTaskById(Long id) {
@@ -149,10 +178,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> history() {
-        System.out.println("""
-
-                История просмотров:
-                """);
         return historyManager.getHistory();
     }
 

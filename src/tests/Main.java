@@ -11,7 +11,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        TaskManager manager = Managers.getDefault();
+        TaskManager manager = Managers.getDefaultFileManager(new java.io.File("fileToSave.csv"));
 
         Task task1 = new Task("Задача 1", "Сделать уборку");
         Task task2 = new Task("Задача 2", "Помыть посуду");
@@ -23,14 +23,13 @@ public class Main {
 
         Epic epic2 = new Epic ("Большая задача 2", "Сделать ремонт");
 
-
-        task1 = manager.createNewTask(task1);
-        task2 = manager.createNewTask(task2);
-        epic1 = manager.createNewEpic(epic1);
-        epic2 = manager.createNewEpic(epic2);
-        subtask1 = manager.createNewSubtask(subtask1);
-        subtask2 = manager.createNewSubtask(subtask2);
-        subtask3 = manager.createNewSubtask(subtask3);
+        /*task1 = manager.createNewTask(task1);             // 1
+        task2 = manager.createNewTask(task2);             // 2
+        epic1 = manager.createNewEpic(epic1);             // 3
+        epic2 = manager.createNewEpic(epic2);             // 4
+        subtask1 = manager.createNewSubtask(subtask1);    // 5
+        subtask2 = manager.createNewSubtask(subtask2);    // 6
+        subtask3 = manager.createNewSubtask(subtask3);    // 7
 
         epic1.addSubtask(subtask1);
         epic1.addSubtask(subtask2);
@@ -38,10 +37,9 @@ public class Main {
 
         System.out.println(manager.getListOfAllTasks() + "\n");
         System.out.println(manager.getListOfAllEpics() + "\n");
-        System.out.println(manager.getListOfAllSubtasks() + "\n");
+        System.out.println(manager.getListOfAllSubtasks() + "\n");*/
 
-        /*
-        task1.updateStatus();
+        /*task1.updateStatus();
         System.out.println(manager.getTaskById(task1.getId()) + "\n");
         task2.updateStatus();
         System.out.println(manager.getTaskById(task2.getId()) + "\n");
@@ -64,51 +62,70 @@ public class Main {
         System.out.println(manager.getEpicById(epic1.getId()) + "\n");
 
         manager.getTaskById(2L);
-        List<Task> list1 = manager.history();
-        for(Task task : list1) {
-            System.out.println(task);
-        }
-        manager.getEpicById(4L);
-        List<Task> list2 = manager.history();
-        for(Task task : list2) {
-            System.out.println(task);
-        }
-        manager.getSubtaskById(7L);
-        List<Task> list3 = manager.history();
-            for(Task task : list3) {
+        List<Task> list = manager.history();
+        for(Task task : list) {
             System.out.println(task);
         }*/
 
-        manager.getTaskById(1L);
-        manager.getTaskById(2L);
-        manager.getEpicById(3L);
-        manager.getSubtaskById(7L);
+        /*manager.getTaskById(1l);
+        manager.getTaskById(2l);
+        manager.getEpicById(3l);
+        manager.getSubtaskById(6l);
 
         List<Task> story = manager.history();
+        System.out.println("История просмотров:");
         for(Task task : story) {
             System.out.println(task.getId());
         }
 
-        manager.getTaskById(2L);
-        manager.getEpicById(4L);
-        manager.getSubtaskById(5L);
-        manager.getSubtaskById(6L);
+        manager.getTaskById(2l);
+        manager.getEpicById(4l);
+        manager.getSubtaskById(6l);
+        manager.getSubtaskById(7l);
 
         story = manager.history();
+        System.out.println("История просмотров:");
+        for(Task task : story) {
+            System.out.println(task.getId());
+        }*/
+
+       /*manager.removeTaskById(2l);
+
+        story = manager.history();
+        System.out.println("История просмотров:");
         for(Task task : story) {
             System.out.println(task.getId());
         }
 
-        manager.removeTaskById(1L);
+        manager.removeEpicById(3l);
 
         story = manager.history();
+        System.out.println("История просмотров:");
+        for(Task task : story) {
+            System.out.println(task.getId());
+        }*/
+
+        System.out.println(manager.getListOfAllTasks() + "\n");
+        System.out.println(manager.getListOfAllEpics() + "\n");
+        System.out.println(manager.getListOfAllSubtasks() + "\n");
+
+        List<Task> story = manager.history();
+        System.out.println("История просмотров:");
         for(Task task : story) {
             System.out.println(task.getId());
         }
 
-        manager.removeEpicById(3L);
+        Subtask sub = manager.createNewSubtask(new Subtask("Подзадача 1", "Купить обои"));
+        manager.getEpicById(4l).addSubtask(sub);
+
+        manager.removeEpicById(3l);
+
+        System.out.println(manager.getListOfAllTasks() + "\n");
+        System.out.println(manager.getListOfAllEpics() + "\n");
+        System.out.println(manager.getListOfAllSubtasks() + "\n");
 
         story = manager.history();
+        System.out.println("История просмотров:");
         for(Task task : story) {
             System.out.println(task.getId());
         }

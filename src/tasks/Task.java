@@ -71,7 +71,7 @@ public class Task {
                 ", status=" + status;
     }
 
-    public String getTypeOfTask (){
-        return "task";
+    public Type getTypeOfTask () {
+        return Type.TASK;
     }
 }
