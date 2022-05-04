@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    protected File fileToSave;
-    protected boolean saveToFile = false;
+    private File fileToSave;
+    private boolean saveToFile = false;
 
     public FileBackedTasksManager(File fileToSave) {
         this.fileToSave = fileToSave;
@@ -55,7 +55,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             manager.setIdCounter(maximId + 1);
             scanner.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("Ошибка! Не удалось прочитать файл с историей.");
+            throw new ManagerSaveException("Ошибка! Не удалось прочитать файл с историей.");
         }
         manager.saveToFile = true;
         return manager;
