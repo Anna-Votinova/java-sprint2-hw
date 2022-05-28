@@ -11,7 +11,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        TaskManager manager = Managers.getDefaultFileManager(new java.io.File("fileToSave.csv"));
+        TaskManager manager = Managers.getDefaultFileManager(new java.io.File("fileToSave.csv"), true);
 
         Task task1 = new Task("Задача 1", "Сделать уборку");
         Task task2 = new Task("Задача 2", "Помыть посуду");

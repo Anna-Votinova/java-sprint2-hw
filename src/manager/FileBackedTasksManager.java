@@ -17,28 +17,32 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         this.fileToSave = fileToSave;
     }
 
-    public static FileBackedTasksManager loadFromFile(File file) {
+    public static FileBackedTasksManager loadFromFile(File file, boolean useFile) {
         FileBackedTasksManager manager = new FileBackedTasksManager(file);
+        if (useFile) {
         try {
             Long maximId = 0L;
-            Scanner scanner = new Scanner(new FileInputStream(file),"UTF-8");
+            Scanner scanner = new Scanner(new FileInputStream(file), "UTF-8");
             while (scanner.hasNext()) {
                 String string = scanner.nextLine();
                 if (string.trim().isEmpty()) {
                     string = scanner.nextLine();
                     List<Long> list = Utilities.fromString(string);
-                    for(Long id : list) {
+                    for (Long id : list) {
                         Task task = manager.getAnyTaskById(id);
                         manager.addNewViewToHistoryWithoutSavingToFiles(task);
                     }
                 } else {
                     Task task = Utilities.getTaskFromString(string);
                     switch (task.getTypeOfTask()) {
-                        case TASK: manager.createNewTask(task);
+                        case TASK:
+                            manager.createNewTask(task);
                             break;
-                        case EPIC: manager.createNewEpic((Epic)task);
+                        case EPIC:
+                            manager.createNewEpic((Epic) task);
                             break;
-                        case SUBTASK: manager.createNewSubtask((Subtask)task);
+                        case SUBTASK:
+                            manager.createNewSubtask((Subtask) task);
                             Long id = Utilities.getEpicId(string);
                             if (id != null) {
                                 Epic epic = manager.getEpicById(id);
@@ -57,7 +61,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (FileNotFoundException ex) {
             throw new ManagerSaveException("Ошибка! Не удалось прочитать файл с историей.");
         }
+
         manager.saveToFile = true;
+    }
         return manager;
     }
 
@@ -148,4 +154,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     protected void addNewViewToHistoryWithoutSavingToFiles(Task task) {
         super.addNewViewToHistory(task);
     }
+
+    public void setSaveToFile(boolean saveToFile) {
+        this.saveToFile = saveToFile;
+    }
+
 }

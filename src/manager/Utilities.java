@@ -1,5 +1,6 @@
 package manager;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class Utilities {
                 task.getName() + "," +
                 task.getStatus() + "," +
                 task.getDescription() + "," +
+                task.getStartTime() + "," +
+                task.getDuration() + "," +
                 (task.getTypeOfTask() == Type.SUBTASK &&
                         ((Subtask)task).getEpic() != null ? ((Subtask)task).getEpic().getId() : "");
 
@@ -27,12 +30,16 @@ public class Utilities {
         if (parts[1].equals("TASK")) {
             task = new Task(parts[2], parts[4]);
             task.setId(Long.parseLong(parts[0]));
+            task.setStartTime(Instant.parse(parts[5]));
+            task.setDuration(Long.parseLong(parts[6]));
         } else if (parts[1].equals("EPIC")) {
             task = new Epic(parts[2], parts[4]);
             task.setId(Long.parseLong(parts[0]));
         } else {
             task = new Subtask(parts[2], parts[4]);
             task.setId(Long.parseLong(parts[0]));
+            task.setStartTime(Instant.parse(parts[5]));
+            task.setDuration(Long.parseLong(parts[6]));
         }
         if (parts[3].equals("IN_PROGRESS")) {
             task.updateStatus();
@@ -47,10 +54,10 @@ public class Utilities {
 
     static Long getEpicId(String value) {
         String[] parts = value.split(",");
-        if (parts[5].trim().isEmpty()) {
+        if (parts.length < 8 || parts[7].trim().isEmpty()) {
             return null;
         } else {
-            return Long.parseLong(parts[5]);
+            return Long.parseLong(parts[7]);
         }
     }
 

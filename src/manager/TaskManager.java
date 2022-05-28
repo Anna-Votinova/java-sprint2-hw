@@ -1,7 +1,10 @@
 package manager;
 
 import tasks.*;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
 
@@ -40,4 +43,6 @@ public interface TaskManager {
     List<Subtask> getSubtaskListOfEpic (Epic epic);
 
     List<Task> history();
+
+    Collection<Task> getPrioritizedTasks();
 }

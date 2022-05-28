@@ -1,12 +1,16 @@
 package tasks;
 
+import java.time.Instant;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable {
     private Long id;
     private String name;
     private String description;
     private Status status;
+
+    private long duration = 0;  // продолжительность в секундах
+    private Instant startTime = Instant.now();
 
     public Task (String name, String description) {
         this.name = name;
@@ -50,6 +54,26 @@ public class Task {
         }
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Instant startTime) {
+        this.startTime = startTime;
+    }
+
+    public Instant getEndTime() {
+        return startTime.plusSeconds(duration);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,7 +95,12 @@ public class Task {
                 ", status=" + status;
     }
 
-    public Type getTypeOfTask () {
+    public Type getTypeOfTask() {
         return Type.TASK;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return getStartTime().compareTo(((Task)o).getStartTime());
     }
 }
