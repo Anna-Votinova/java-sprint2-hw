@@ -1,20 +1,26 @@
-package manager;
+package com.taskproject.manager;
 
-import tasks.*;
+import com.taskproject.tasks.Epic;
+import com.taskproject.tasks.Subtask;
+import com.taskproject.tasks.Task;
+import com.taskproject.tasks.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
 
 public interface TaskManager {
 
-    Task createNewTask(Task task);
+    Task addNewTask(Task task);
 
-    Subtask createNewSubtask (Subtask subtask);
+    Subtask addNewSubtask(Subtask subtask);
 
-    Epic createNewEpic (Epic epic);
+    Epic addNewEpic(Epic epic);
 
     void updateTask(Task task);
+
+    void updateEpic(Epic epic);
+
+    void updateSubtask(Subtask subtask);
 
     Task getTaskById(Long id);
 

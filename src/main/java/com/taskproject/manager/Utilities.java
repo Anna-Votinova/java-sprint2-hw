@@ -1,13 +1,12 @@
-package manager;
+package com.taskproject.manager;
+
+import com.taskproject.tasks.Epic;
+import com.taskproject.tasks.Subtask;
+import com.taskproject.tasks.Task;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
-import tasks.Type;
 
 public class Utilities {
 
@@ -19,7 +18,7 @@ public class Utilities {
                 task.getDescription() + "," +
                 task.getStartTime() + "," +
                 task.getDuration() + "," +
-                (task.getTypeOfTask() == Type.SUBTASK &&
+                (task.getClass().equals(Subtask.class) &&
                         ((Subtask)task).getEpic() != null ? ((Subtask)task).getEpic().getId() : "");
 
     }

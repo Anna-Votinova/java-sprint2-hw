@@ -1,8 +1,8 @@
-package manager;
+package com.taskproject.manager;
 
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
+import com.taskproject.tasks.Epic;
+import com.taskproject.tasks.Subtask;
+import com.taskproject.tasks.Task;
 
 import java.io.*;
 import java.util.List;
@@ -35,14 +35,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 } else {
                     Task task = Utilities.getTaskFromString(string);
                     switch (task.getTypeOfTask()) {
-                        case TASK:
-                            manager.createNewTask(task);
+                        case "TASK":
+                            manager.addNewTask(task);
                             break;
-                        case EPIC:
-                            manager.createNewEpic((Epic) task);
+                        case "EPIC":
+                            manager.addNewEpic((Epic) task);
                             break;
-                        case SUBTASK:
-                            manager.createNewSubtask((Subtask) task);
+                        case "SUBTASK":
+                            manager.addNewSubtask((Subtask) task);
                             Long id = Utilities.getEpicId(string);
                             if (id != null) {
                                 Epic epic = manager.getEpicById(id);
@@ -102,22 +102,22 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Task createNewTask(Task task) {
-        task = super.createNewTask(task);
+    public Task addNewTask(Task task) {
+        task = super.addNewTask(task);
         save();
         return task;
     }
 
     @Override
-    public Subtask createNewSubtask (Subtask subtask) {
-        subtask = super.createNewSubtask(subtask);
+    public Subtask addNewSubtask(Subtask subtask) {
+        subtask = super.addNewSubtask(subtask);
         save();
         return subtask;
     }
 
     @Override
-    public Epic createNewEpic (Epic epic) {
-        epic = super.createNewEpic(epic);
+    public Epic addNewEpic(Epic epic) {
+        epic = super.addNewEpic(epic);
         save();
         return epic;
     }
@@ -125,6 +125,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     @Override
     public void updateTask(Task task) {
         super.updateTask(task);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        super.updateSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
         save();
     }
 

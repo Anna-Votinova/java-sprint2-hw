@@ -1,4 +1,4 @@
-package tasks;
+package com.taskproject.tasks;
 
 public class Subtask extends Task {
 
@@ -30,7 +30,7 @@ public class Subtask extends Task {
     }
 
     @Override
-    public Type getTypeOfTask() {
-        return Type.SUBTASK;
+    public String getTypeOfTask() {
+        return "SUBTASK";
     }
 }

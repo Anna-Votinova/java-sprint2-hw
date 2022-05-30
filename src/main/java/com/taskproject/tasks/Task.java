@@ -1,4 +1,4 @@
-package tasks;
+package com.taskproject.tasks;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -9,13 +9,16 @@ public class Task implements Comparable {
     private String description;
     private Status status;
 
-    private long duration = 0;  // продолжительность в секундах
-    private Instant startTime = Instant.now();
+    // продолжительность в секундах
+    private long duration;
+
+    private Instant startTime;
 
     public Task (String name, String description) {
         this.name = name;
         this.description = description;
-        status = Status.NEW;
+        this.status = Status.NEW;
+        this.startTime = Instant.now();
     }
 
     public Long getId() {
@@ -95,8 +98,8 @@ public class Task implements Comparable {
                 ", status=" + status;
     }
 
-    public Type getTypeOfTask() {
-        return Type.TASK;
+    public String getTypeOfTask() {
+        return "TASK";
     }
 
     @Override

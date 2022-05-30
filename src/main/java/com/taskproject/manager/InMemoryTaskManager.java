@@ -1,6 +1,9 @@
-package manager;
+package com.taskproject.manager;
 
-import tasks.*;
+import com.taskproject.tasks.Epic;
+import com.taskproject.tasks.Subtask;
+import com.taskproject.tasks.Task;
+import com.taskproject.tasks.*;
 
 import java.util.*;
 
@@ -26,9 +29,7 @@ public class InMemoryTaskManager implements TaskManager {
     private void generateId(Task task) {
         if (task.getId() == null) {
             task.setId(idCounter++);
-        }/* else {
-            System.out.println("Ошибка! Передана задача с непустым id");
-        }*/
+        }
     }
 
     protected HistoryManager getHistoryManager() {
@@ -36,7 +37,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task createNewTask(Task task) {
+    public Task addNewTask(Task task) {
         if (addAndMaybeDelete(task)) {
             generateId(task);
             tasks.put(task.getId(), task);
@@ -45,7 +46,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Subtask createNewSubtask(Subtask subtask) {
+    public Subtask addNewSubtask(Subtask subtask) {
         if (addAndMaybeDelete(subtask)) {
             generateId(subtask);
             subtasks.put(subtask.getId(), subtask);
@@ -54,7 +55,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic createNewEpic(Epic epic) {
+    public Epic addNewEpic(Epic epic) {
         generateId(epic);
         epics.put(epic.getId(), epic);
         return epic;
@@ -87,17 +88,30 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateTask(Task task) {
         if (task.getId() == null) {
+            System.out.println("Ошибка! Передана большая задача с пустым id");
+            return;
+        }
+            tasks.put(task.getId(), task);
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        if (epic.getId() == null) {
             System.out.println("Ошибка! Передана задача с пустым id");
             return;
         }
-        if (task.getTypeOfTask().equals("task")) {
-            tasks.put(task.getId(), task);
-        } else if (task.getTypeOfTask().equals("subtask")) {
-            subtasks.put(task.getId(), (Subtask) task);
-        } else if (task.getTypeOfTask().equals("epic")) {
-            epics.put(task.getId(), (Epic) task);
-        }
+        epics.put(epic.getId(), epic);
     }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        if (subtask.getId() == null) {
+            System.out.println("Ошибка! Передана подзадача с пустым id");
+            return;
+        }
+        subtasks.put(subtask.getId(), subtask);
+    }
+
     @Override
     public Task getTaskById(Long id) {
         Task task = tasks.get(id);

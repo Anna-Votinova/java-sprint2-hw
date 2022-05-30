@@ -1,4 +1,4 @@
-package tasks;
+package com.taskproject.tasks;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -43,10 +43,11 @@ public class Epic extends Task {
         }
     }
 
+    //для большой задачи нельзя установить желаемую продолжительность,
+    //она должна рассчитываться, поэтому метод остается пустым
     @Override
     public void setDuration(long duration) {
-        //для большой задачи нельзя установить желаемую продолжительность, она должна рассчитываться,
-        //поэтому метод остается пустым
+
     }
 
     @Override
@@ -58,10 +59,11 @@ public class Epic extends Task {
         return d;
     }
 
+    // ничего не надо делать
+    // должно рассчитываться
     @Override
     public void setStartTime(Instant startTime) {
-        // ничего не надо делать
-        // должно рассчитываться
+
     }
 
     @Override
@@ -72,8 +74,9 @@ public class Epic extends Task {
                 time = sub.getStartTime();
             }
         }
-        return subtasks.size() > 0 ? time : super.getStartTime();
         // super.getStartTime() - время создания большой задачи
+        return subtasks.size() > 0 ? time : super.getStartTime();
+
     }
 
     @Override
@@ -94,7 +97,7 @@ public class Epic extends Task {
     }
 
     @Override
-    public Type getTypeOfTask() {
-        return Type.EPIC;
+    public String getTypeOfTask() {
+        return "EPIC";
     }
 }

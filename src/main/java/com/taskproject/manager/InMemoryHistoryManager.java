@@ -1,6 +1,6 @@
-package manager;
+package com.taskproject.manager;
 
-import tasks.Task;
+import com.taskproject.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,23 +46,23 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private final LinkedList listHistory = new LinkedList();
-    private final Map<Long, Node> map = new HashMap<>();
+    private final Map<Long, Node> nodes = new HashMap<>();
 
     @Override
     public void add(Task task) {
         if(task != null) {
-        Node node = map.get(task.getId());
+        Node node = nodes.get(task.getId());
             if(node != null) {
                 listHistory.removeNode(node);
             }
             listHistory.linkLast(task);
-            map.put(task.getId(), listHistory.tail);
+            nodes.put(task.getId(), listHistory.tail);
         }
     }
 
     @Override
     public void remove(long id) {
-        Node node = map.get(id);
+        Node node = nodes.get(id);
         if(node != null) {
             listHistory.removeNode(node);
         }

@@ -1,4 +1,4 @@
-package tasks;
+package com.taskproject.tasks;
 
 public enum Status {
     NEW,

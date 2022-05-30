@@ -1,4 +1,4 @@
-package manager;
+package com.taskproject.manager;
 
 public class Managers {
 
