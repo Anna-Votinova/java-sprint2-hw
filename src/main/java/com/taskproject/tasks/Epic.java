@@ -19,7 +19,7 @@ public class Epic extends Task {
     }
 
     @Override
-    public void updateStatus() {
+    public void setStatus(Status status) {
         boolean areSubtasksInProgress = false;
         boolean areNewSubtasks = false;
         boolean areDoneSubtasks = false;
@@ -30,7 +30,7 @@ public class Epic extends Task {
             if (subtask.getStatus() == Status.IN_PROGRESS) {
                 areSubtasksInProgress = true;
                 if (getStatus() == Status.NEW) {
-                    super.updateStatus();
+                    super.setStatus(Status.IN_PROGRESS);
                 }
                 break;
             }
@@ -39,7 +39,7 @@ public class Epic extends Task {
             }
         }
         if (areDoneSubtasks && !areNewSubtasks && !areSubtasksInProgress) {
-            super.updateStatus();
+            super.setStatus(Status.DONE);
         }
     }
 

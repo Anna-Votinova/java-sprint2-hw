@@ -1,6 +1,7 @@
 package com.taskproject.manager;
 
 import com.taskproject.tasks.Epic;
+import com.taskproject.tasks.Status;
 import com.taskproject.tasks.Subtask;
 import com.taskproject.tasks.Task;
 
@@ -40,14 +41,7 @@ public class Utilities {
             task.setStartTime(Instant.parse(parts[5]));
             task.setDuration(Long.parseLong(parts[6]));
         }
-        if (parts[3].equals("IN_PROGRESS")) {
-            task.updateStatus();
-        }
-        if (parts[3].equals("DONE")) {
-            for(int i = 1; i <= 2; ++i) {
-                task.updateStatus();
-            }
-        }
+        task.setStatus(Status.valueOf(parts[3]));
         return task;
     }
 

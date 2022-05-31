@@ -74,7 +74,7 @@ class EpicTest {
     */
 
     @Test
-    public void statusOfEpicWithoutSubtasks_shouldBeNEW() {
+    public void statusOfEpicWithoutSubtasks_shouldBeNew() {
         Epic epic = new Epic("Epic 1", "new Epic description");
 
         Status expectedStatus = Status.NEW;
@@ -83,7 +83,7 @@ class EpicTest {
     }
 
     @Test
-    public void statusOfEpicWithSubtasksAllNEW_shouldBeNEW() {
+    public void statusOfEpicWithSubtasksAllNew_shouldBeNew() {
         Epic epic = new Epic("Epic 1", "new Epic description");
 
         Subtask subtask1 = new Subtask("Subtask 1", "new Subtask description");
@@ -99,7 +99,7 @@ class EpicTest {
     }
 
     @Test
-    public void statusOfEpicWithSubtasksNEWandINPROGRESS_shouldBeINPROGRESS() {
+    public void statusOfEpicWithSubtasksNewAndINProgress_shouldBeInProgress() {
         Epic epic = new Epic("Epic 1", "new Epic description");
 
         Subtask subtask1 = new Subtask("Subtask 1", "new Subtask description");
@@ -110,7 +110,7 @@ class EpicTest {
         epic.addSubtask(subtask3);
 
         // 1-я поздазача становится IN_PROGRESS
-        subtask1.updateStatus();
+        subtask1.setStatus(Status.IN_PROGRESS);
 
         Status expectedStatus = Status.IN_PROGRESS;
         Status actualStatus = epic.getStatus();
@@ -118,7 +118,7 @@ class EpicTest {
     }
 
     @Test
-    public void statusOfEpicWithSubtasksNEWandDONE_shouldBeINPROGRESS() {
+    public void statusOfEpicWithSubtasksNewAndDone_shouldBeInProgress() {
         Epic epic = new Epic("Epic 1", "new Epic description");
 
         Subtask subtask1 = new Subtask("Subtask 1", "new Subtask description");
@@ -129,8 +129,7 @@ class EpicTest {
         epic.addSubtask(subtask3);
 
         // 1-я подзадача становится DONE
-        subtask1.updateStatus();
-        subtask1.updateStatus();
+        subtask1.setStatus(Status.DONE);
 
         Status expectedStatus = Status.IN_PROGRESS;
         Status actualStatus = epic.getStatus();
@@ -138,7 +137,7 @@ class EpicTest {
     }
 
     @Test
-    public void statusOfEpicWithSubtasksAllDONE_shouldBeDONE() {
+    public void statusOfEpicWithSubtasksAllDone_shouldBeDone() {
         Epic epic = new Epic("Epic 1", "new Epic description");
 
         Subtask subtask1 = new Subtask("Subtask 1", "new Subtask description");
@@ -149,12 +148,9 @@ class EpicTest {
         epic.addSubtask(subtask3);
 
         // Все становятся DONE
-        subtask1.updateStatus();
-        subtask1.updateStatus();
-        subtask2.updateStatus();
-        subtask2.updateStatus();
-        subtask3.updateStatus();
-        subtask3.updateStatus();
+        subtask1.setStatus(Status.DONE);
+        subtask2.setStatus(Status.DONE);
+        subtask3.setStatus(Status.DONE);
 
         Status expectedStatus = Status.DONE;
         Status actualStatus = epic.getStatus();

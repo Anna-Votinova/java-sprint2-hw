@@ -14,7 +14,7 @@ class TaskTest {
     */
 
     @Test
-    public void taskStatus_shouldBeNEW() {
+    public void taskStatus_shouldBeNew() {
         Task task = new Task("Task 1", "new Task description");
 
         Status expectedStatus = Status.NEW;
@@ -23,10 +23,10 @@ class TaskTest {
     }
 
     @Test
-    public void taskStatus_shouldBeINPROGRESS() {
+    public void taskStatus_shouldBeInProgress() {
         Task task = new Task("Task 1", "new Task description");
 
-        task.updateStatus();
+        task.setStatus(Status.IN_PROGRESS);
 
         Status expectedStatus = Status.IN_PROGRESS;
         Status actualStatus = task.getStatus();
@@ -34,11 +34,10 @@ class TaskTest {
     }
 
     @Test
-    public void taskStatus_shouldBeDONE() {
+    public void taskStatus_shouldBeDone() {
         Task task = new Task("Task 1", "new Task description");
 
-        task.updateStatus();
-        task.updateStatus();
+        task.setStatus(Status.DONE);
 
         Status expectedStatus = Status.DONE;
         Status actualStatus = task.getStatus();

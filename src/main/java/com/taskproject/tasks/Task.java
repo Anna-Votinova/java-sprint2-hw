@@ -49,12 +49,8 @@ public class Task implements Comparable {
         return status;
     }
 
-    public void updateStatus() {
-        if (status == Status.NEW) {
-            status = Status.IN_PROGRESS;
-        } else if (status == Status.IN_PROGRESS) {
-            status = Status.DONE;
-        }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public long getDuration() {

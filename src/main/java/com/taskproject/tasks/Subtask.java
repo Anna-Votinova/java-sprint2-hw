@@ -17,10 +17,10 @@ public class Subtask extends Task {
     }
 
     @Override
-    public void updateStatus() {
-        super.updateStatus();
+    public void setStatus(Status status) {
+        super.setStatus(status);
         if (epic != null) {
-            epic.updateStatus();
+            epic.setStatus(status);
         }
     }
 
