@@ -26,6 +26,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     String name3 = "resources/file3.csv";
     String name4 = "resources/file4.csv";
     String name5 = "resources/file5.csv";
+    String name6 = "resources/file6.csv";
 
     FileBackedTasksManagerTest() {
         super(Managers.getDefaultFileManager(new File("resources/fileToSave.csv"), false));

@@ -20,50 +20,50 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public static FileBackedTasksManager loadFromFile(File file, boolean useFile) {
         FileBackedTasksManager manager = new FileBackedTasksManager(file);
         if (useFile) {
-        try {
-            Long maximId = 0L;
-            Scanner scanner = new Scanner(new FileInputStream(file), "UTF-8");
-            while (scanner.hasNext()) {
-                String string = scanner.nextLine();
-                if (string.trim().isEmpty()) {
-                    string = scanner.nextLine();
-                    List<Long> list = Utilities.fromString(string);
-                    for (Long id : list) {
-                        Task task = manager.getAnyTaskById(id);
-                        manager.addNewViewToHistoryWithoutSavingToFiles(task);
-                    }
-                } else {
-                    Task task = Utilities.getTaskFromString(string);
-                    switch (task.getTypeOfTask()) {
-                        case "TASK":
-                            manager.addNewTask(task);
-                            break;
-                        case "EPIC":
-                            manager.addNewEpic((Epic) task);
-                            break;
-                        case "SUBTASK":
-                            manager.addNewSubtask((Subtask) task);
-                            Long id = Utilities.getEpicId(string);
-                            if (id != null) {
-                                Epic epic = manager.getEpicById(id);
-                                if (epic != null) {
-                                    epic.addSubtask((Subtask) task);
+            try {
+                Long maximId = 0L;
+                Scanner scanner = new Scanner(new FileInputStream(file), "UTF-8");
+                while (scanner.hasNext()) {
+                    String string = scanner.nextLine();
+                    if (string.trim().isEmpty()) {
+                        string = scanner.nextLine();
+                        List<Long> list = Utilities.fromString(string);
+                        for (Long id : list) {
+                            Task task = manager.getAnyTaskById(id);
+                            manager.addNewViewToHistoryWithoutSavingToFiles(task);
+                        }
+                    } else {
+                        Task task = Utilities.getTaskFromString(string);
+                        switch (task.getTypeOfTask()) {
+                            case "TASK":
+                                manager.addNewTask(task);
+                                break;
+                            case "EPIC":
+                                manager.addNewEpic((Epic) task);
+                                break;
+                            case "SUBTASK":
+                                manager.addNewSubtask((Subtask) task);
+                                Long id = Utilities.getEpicId(string);
+                                if (id != null) {
+                                    Epic epic = manager.getEpicById(id);
+                                    if (epic != null) {
+                                        epic.addSubtask((Subtask) task);
+                                    }
                                 }
-                            }
-                    }
-                    if (task.getId() > maximId) {
-                        maximId = task.getId();
+                        }
+                        if (task.getId() > maximId) {
+                            maximId = task.getId();
+                        }
                     }
                 }
+                manager.setIdCounter(maximId + 1);
+                scanner.close();
+            } catch (FileNotFoundException ex) {
+                throw new ManagerSaveException("Ошибка! Не удалось прочитать файл с историей.");
             }
-            manager.setIdCounter(maximId + 1);
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            throw new ManagerSaveException("Ошибка! Не удалось прочитать файл с историей.");
-        }
 
-        manager.saveToFile = true;
-    }
+            manager.saveToFile = true;
+        }
         return manager;
     }
 

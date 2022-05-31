@@ -46,7 +46,7 @@ class HistoryManagerTest {
     }
 
     /*
-     тесты на метод add
+    //////////////////  тесты на метод add
     */
 
     @Test
@@ -93,7 +93,7 @@ class HistoryManagerTest {
     }
 
     /*
-     тесты на метод remove
+    //////////////////  тесты на метод remove
     */
 
     @Test
@@ -209,7 +209,7 @@ class HistoryManagerTest {
     }
 
     /*
-     тесты на метод getHistory
+    //////////////////  тесты на метод getHistory
     */
 
     @Test
@@ -232,7 +232,7 @@ class HistoryManagerTest {
         add(task1);
         add(task2);
         add(task3);
-        historyManager.add(task1);   // повтор
+        historyManager.add(task1);
 
         List<Task> list = historyManager.getHistory();
         assertEquals(3, list.size(), "Количество задач в истории просмотров неверное");
@@ -243,7 +243,7 @@ class HistoryManagerTest {
         add(task1);
         add(task2);
         add(task3);
-        historyManager.add(task1);   // повтор
+        historyManager.add(task1);
 
         List<Task> list = historyManager.getHistory();
         assertEquals(task2, list.get(0), "Порядок задач при дублировании неверный");
@@ -254,7 +254,7 @@ class HistoryManagerTest {
         add(task1);
         add(task2);
         add(task3);
-        historyManager.add(task1);   // повтор
+        historyManager.add(task1);
 
         List<Task> list = historyManager.getHistory();
         assertEquals(task3, list.get(1), "Порядок задач при дублировании неверный");
@@ -265,7 +265,7 @@ class HistoryManagerTest {
         add(task1);
         add(task2);
         add(task3);
-        historyManager.add(task1);   // повтор
+        historyManager.add(task1);
 
         List<Task> list = historyManager.getHistory();
         assertEquals(task1, list.get(2), "Порядок задач при дублировании неверный");

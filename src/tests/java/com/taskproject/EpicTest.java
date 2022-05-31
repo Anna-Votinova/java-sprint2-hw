@@ -18,7 +18,7 @@ class EpicTest {
     }
 
     /*
-    тесты на метод addSubtask
+    //////////////////  тесты на метод addSubtask
     */
 
     @Test
@@ -99,7 +99,7 @@ class EpicTest {
     }
 
     @Test
-    public void statusOfEpicWithSubtasksNewAndINProgress_shouldBeInProgress() {
+    public void statusOfEpicWithSubtasksNewAndInProgress_shouldBeInProgress() {
         Epic epic = new Epic("Epic 1", "new Epic description");
 
         Subtask subtask1 = new Subtask("Subtask 1", "new Subtask description");

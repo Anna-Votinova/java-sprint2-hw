@@ -3,16 +3,15 @@ package com.taskproject.manager;
 import com.taskproject.tasks.Epic;
 import com.taskproject.tasks.Subtask;
 import com.taskproject.tasks.Task;
-import com.taskproject.tasks.*;
 
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private Long idCounter = 1L;
 
-    private final Map<Long, Task> tasks = new HashMap<>();
-    private final Map <Long, Subtask> subtasks = new HashMap<>();
-    private final Map <Long, Epic> epics = new HashMap<>();
+    private Map<Long, Task> tasks = new HashMap<>();
+    private Map <Long, Subtask> subtasks = new HashMap<>();
+    private Map <Long, Epic> epics = new HashMap<>();
 
     private TreeSet<Task> prioritizedTasks = new TreeSet<>();
 
@@ -91,7 +90,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ошибка! Передана большая задача с пустым id");
             return;
         }
-            tasks.put(task.getId(), task);
+        tasks.put(task.getId(), task);
     }
 
     @Override
@@ -148,18 +147,38 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void clearAllTasks () {
-        tasks.clear();
+    public void clearAllTasks() {
+        List<Long> taskIds = new ArrayList<>();
+        for(Task task : tasks.values()) {
+            taskIds.add(task.getId());
+        }
+        for(Long id : taskIds) {
+            removeTaskById(id);
+        }
     }
+
     @Override
-    public void clearAllSubtasks () {
-        subtasks.clear();
+    public void clearAllSubtasks() {
+        List<Long> taskIds = new ArrayList<>();
+        for(Subtask task : subtasks.values()) {
+            taskIds.add(task.getId());
+        }
+        for(Long id : taskIds) {
+            removeSubtaskById(id);
+        }
     }
+
     @Override
-    public void clearAllEpics () {
-        subtasks.clear();
-        epics.clear();
+    public void clearAllEpics() {
+        List<Long> taskIds = new ArrayList<>();
+        for(Epic epic : epics.values()) {
+            taskIds.add(epic.getId());
+        }
+        for(Long id : taskIds) {
+            removeEpicById(id);
+        }
     }
+
     @Override
     public void removeTaskById(Long id) {
         if (!tasks.containsKey(id)) {
@@ -170,20 +189,25 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.remove(id);
         historyManager.remove(id);
     }
+
     @Override
     public void removeSubtaskById(Long id) {
         if (!subtasks.containsKey(id)) {
             return;
         }
         Subtask subtask = subtasks.get(id);
+        Epic epic = subtask.getEpic();
+        if (epic != null && epic.getId() != null) {
+            epic = epics.get(epic.getId());
+            epic.removeSubtask(subtask);
+        }
         prioritizedTasks.remove(subtask);
         subtasks.remove(id);
         historyManager.remove(id);
     }
+
     @Override
     public void removeEpicById(Long id) {
-        epics.remove(id);
-
         List<Long> toRemove = new ArrayList<>();
         for(Subtask subtask : subtasks.values()) {
             if (subtask.getEpic().getId().equals(id)) {
@@ -193,20 +217,25 @@ public class InMemoryTaskManager implements TaskManager {
         for(Long i : toRemove) {
             removeSubtaskById(i);
         }
+        epics.remove(id);
         historyManager.remove(id);
     }
+
     @Override
     public List<Task> getListOfAllTasks() {
         return new ArrayList<>(tasks.values());
     }
+
     @Override
     public List<Subtask> getListOfAllSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
+
     @Override
     public List<Epic> getListOfAllEpics() {
         return new ArrayList<>(epics.values());
     }
+
     @Override
     public List<Subtask> getSubtaskListOfEpic (Epic epic) {
         List<Subtask> list = new ArrayList<>();
@@ -227,4 +256,31 @@ public class InMemoryTaskManager implements TaskManager {
         return prioritizedTasks;
     }
 
+    protected Map<Long, Task> getTasks() {
+        return tasks;
+    }
+
+    protected Map<Long, Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    protected Map<Long, Epic> getEpics() {
+        return epics;
+    }
+
+    protected void setTasks(Map<Long, Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    protected void setSubtasks(Map<Long, Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
+    protected void setEpics(Map<Long, Epic> epics) {
+        this.epics = epics;
+    }
+
+    protected void setPrioritizedTasks(TreeSet<Task> prioritizedTasks) {
+        this.prioritizedTasks = prioritizedTasks;
+    }
 }

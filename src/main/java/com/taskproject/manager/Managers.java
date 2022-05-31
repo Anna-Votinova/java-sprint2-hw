@@ -1,5 +1,7 @@
 package com.taskproject.manager;
 
+import java.net.URI;
+
 public class Managers {
 
     public static TaskManager getDefault() {
@@ -7,12 +9,20 @@ public class Managers {
     }
 
     public static TaskManager getDefaultFileManager(java.io.File file, boolean useFile) {
-        FileBackedTasksManager manager = FileBackedTasksManager.loadFromFile(file, useFile);
-        return manager;
+        return FileBackedTasksManager.loadFromFile(file, useFile);
     }
 
-    public static HistoryManager getDefaultHistory(){
+    public static TaskManager getDefault(URI url, String API) {
+        return HTTPTaskManager.loadFromServer(url, API);
+    }
+
+    public static TaskManager getDefault(URI url) {
+        return HTTPTaskManager.loadFromServer(url, null);
+    }
+
+    public static HistoryManager getDefaultHistory() {
         return new InMemoryHistoryManager();
     }
 
 }
+

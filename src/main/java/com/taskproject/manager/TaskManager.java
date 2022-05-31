@@ -3,7 +3,6 @@ package com.taskproject.manager;
 import com.taskproject.tasks.Epic;
 import com.taskproject.tasks.Subtask;
 import com.taskproject.tasks.Task;
-import com.taskproject.tasks.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,9 +45,10 @@ public interface TaskManager {
 
     List<Epic> getListOfAllEpics();
 
-    List<Subtask> getSubtaskListOfEpic (Epic epic);
+    List<Subtask> getSubtaskListOfEpic(Epic epic);
 
     List<Task> history();
 
     Collection<Task> getPrioritizedTasks();
+
 }
