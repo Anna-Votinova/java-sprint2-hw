@@ -21,6 +21,7 @@ public class HttpTaskServer {
     public static final int PORT = 8080;
     private HttpServer server;
     private TaskManager manager = Managers.getDefault(URI.create("http://localhost:" + KVServer.PORT));
+    Gson gson = new Gson();
 
     public HttpTaskServer() throws IOException {
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
@@ -37,7 +38,6 @@ public class HttpTaskServer {
     }
 
     private HttpHandler getHandlerTask(String request) {
-        Gson gson = new Gson();
         return (h) -> {
             try {
                 switch (h.getRequestMethod()) {
@@ -94,7 +94,6 @@ public class HttpTaskServer {
     }
 
     private HttpHandler getHandlerSubtask(String request) {
-        Gson gson = new Gson();
         return (h) -> {
             try {
                 switch (h.getRequestMethod()) {
@@ -151,7 +150,6 @@ public class HttpTaskServer {
     }
 
     private HttpHandler getHandlerEpic(String request) {
-        Gson gson = new Gson();
         return (h) -> {
             try {
                 switch (h.getRequestMethod()) {
@@ -209,7 +207,6 @@ public class HttpTaskServer {
     }
 
     private HttpHandler getHandlerSubtasksOfEpic(String request) {
-        Gson gson = new Gson();
         return (h) -> {
             try {
                 switch (h.getRequestMethod()) {
@@ -237,7 +234,6 @@ public class HttpTaskServer {
     }
 
     private HttpHandler getHandlerHistory(String request) {
-        Gson gson = new Gson();
         return (h) -> {
             try {
                 switch (h.getRequestMethod()) {
@@ -258,7 +254,6 @@ public class HttpTaskServer {
     }
 
     private HttpHandler getHandlerPrioritizedTasks(String request) {
-        Gson gson = new Gson();
         return (h) -> {
             try {
                 switch (h.getRequestMethod()) {
