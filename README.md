@@ -1,6 +1,6 @@
-# taskmanager
+# task-manager
 
-Taskmanager - a service for planning your important events
+Task Manager - a service for planning your important events
 
 Stack:
 
