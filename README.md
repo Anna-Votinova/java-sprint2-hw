@@ -1,2 +1,7 @@
-# java-sprint2-hw
-Second sprint homework
+# taskmanager
+
+Taskmanager - a service for planning your important events
+
+Stack:
+
+Java 8+, JUnit
